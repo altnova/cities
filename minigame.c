@@ -8,7 +8,6 @@
 #define ITERATION "слышь\nне повторяйся, мудила"
 #define NONEXISTENT "ты меня не любишь"
 
-
 /* 	
  *  stat == -1, if the word was used 
  * 	stat == 0, if it is nonexistent word
@@ -17,7 +16,6 @@
  *	through this node
  * 	passing == -1, if the last word left a trace
 */		
-
 
 char first, last, *response, *request;
 const char OUT[5] = OUT_ME;
