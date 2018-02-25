@@ -22,7 +22,6 @@ const char OUT[5] = OUT_ME;
 const char HELP[5] = HELP_ME;
 trie *tree;
 
-
 /*******************************************************************/
 /* 	main purpose functions	*/
 
