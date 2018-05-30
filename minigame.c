@@ -5,8 +5,8 @@
 #include "trielib.c"
 #define OUT_ME "gtfo"
 #define	HELP_ME "help"
-#define ITERATION "слышь\nне повторяйся, мудила"
-#define NONEXISTENT "ты меня не любишь"
+#define ITERATION "все мудилы повторяются"
+#define NONEXISTENT "ты меня не любишь. нет такого города"
 
 /* 	
  *  stat == -1, if the word was used 
@@ -30,11 +30,12 @@ void game();
 /* 	controls game process flow */ 
 void abort_(const char *s, int i)
 {
-	printf("%s\n", s);
 	if (!i)	{
+		printf("\t%s\n\t", s);
 		game(tree);
 	}
 	else {
+		printf("\t%s\n\n", s);
 		free(request);
 		free(response);
 		trie_wipe(tree, NAMES_RANGE);
@@ -66,7 +67,7 @@ void answer(trie *leaf, int i)
 	if (leaf->next[j]->stat == 1) {
 		last = response[i];
 		response[i + 1] = '\0';
-		printf("%s", response);
+		printf("\t%s", response);
 		trie_name_resection(tree, response, 0);
 		return;
 	}
@@ -93,21 +94,21 @@ void game()
 	request[strlen(request) - 1] = '\0';
 
 		/*	if exit is requested	*/
-	if (strcmp(request, OUT) == 0) 
+	if (strcmp(request, OUT) == 0)  
 		abort_("ok", 1); 
 
 
 		/*	if help is requested	 */
 	if (strcmp(request, HELP) == 0) {
-		printf("слабак\nты должен был сказать\n");
+		printf("\tслабак\n\tты должен был сказать\n");
 		response[0] = last;
 		answer(tree->next[trie_name_value(last)], 1);
 
 
-		printf("\nа я говорю\n");
+		printf("\n\tа я говорю\n");
 
 		if (!is_existing(last))
-				abort_("ничья", 1);
+				abort_("\tничья", 1);
 
 		response[0] = last;
 		answer(tree->next[trie_name_value(last)], 1);
@@ -117,7 +118,7 @@ void game()
 
 	/*	if first letter of request doesn't match last response	*/
 	if (trie_name_value(request[0]) != trie_name_value(last)) 	
-		abort_("ну хоть попытайся", 0);	
+		abort_("\tну хоть попытайся", 0);	
 
 							
 	switch(trie_name_status(tree, request, 0)) 
@@ -135,7 +136,7 @@ void game()
 			first = trie_name_char(trie_name_value(request[strlen(request) - 1]));
 
 			if (!is_existing(first))
-				abort_("you won", 1);
+				abort_("ты выиграл", 1);
 
 			response[0] = first;
 			trie_name_resection(tree, request, 0);
@@ -152,9 +153,9 @@ int main()
 
 	srand(time(NULL));
 	tree = trie_name_vocab("cities.txt");
-
+	printf("\n");
 	answer(tree, 0);
-	printf("\nтебе на %c\n", last);
+	printf("\n\tтебе на %c\n\t", last);
 	game();
 	return 0;
 }
